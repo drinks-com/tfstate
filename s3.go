@@ -43,9 +43,14 @@ type S3 struct {
 	Key           string `map:"key"`
 	DynamoDBTable string `map:"dynamodb_table"`
 	Encrypt       bool   `map:"encrypt"`
-	backend       tfBackend.Backend
-	state         tfState.State
-	lockID        string
+
+	AccessKey string `map:"access_key"`
+	SecretKey string `map:"secret_key"`
+	RoleArn   string `map:"role_arn"`
+
+	backend tfBackend.Backend
+	state   tfState.State
+	lockID  string
 }
 
 // Read retrieves and refreshes the remote state and returns terraform.State
