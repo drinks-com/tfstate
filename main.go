@@ -3,16 +3,7 @@ package tfstate
 import (
 	"fmt"
 	"reflect"
-
-	"github.com/hashicorp/terraform/terraform"
 )
-
-// State is the interface for working with terraform state
-type State interface {
-	Read(workspace ...string) (*terraform.State, error)
-	Write(ts *terraform.State) error
-	Persist() error
-}
 
 // StructToMap converts a struct to a map using the struct's tags.
 // It uses a 'map' tag on struct fields to decide which fields to add to the

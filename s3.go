@@ -12,15 +12,15 @@ import (
 
 // Example usage:
 // func main() {
-// 	remoteState := NewStateS3(&S3{
+// 	remoteState := &S3{
 // 		Region:        "us-west-2",
 // 		Bucket:        "drinks-terraform-remote-state-test",
 // 		Key:           "prod.tfstate",
 // 		DynamoDBTable: "terraform-state-lock-test",
 // 		Encrypt:       true,
-// 	})
+// 	}
 //
-// 	state, err := remoteState.Read("default")
+// 	state, err := remoteState.Read()
 // 	if err != nil {
 // 		log.Fatal(err)
 // 	}
@@ -46,11 +46,6 @@ type S3 struct {
 	backend       tfBackend.Backend
 	state         tfState.State
 	lockID        string
-}
-
-// NewStateS3 takes s of type *S3 and returns State interface
-func NewStateS3(s *S3) State {
-	return s
 }
 
 // Read retrieves and refreshes the remote state and returns terraform.State
@@ -96,7 +91,8 @@ func (s *S3) Read(workspace ...string) (*terraform.State, error) {
 		return nil, err
 	}
 
-	return s.state.State(), nil
+	state := s.state.State()
+	return state, nil
 }
 
 // Write saves a state in memory

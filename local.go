@@ -15,11 +15,6 @@ type Local struct {
 	state       *terraform.State
 }
 
-// NewStateLocal takes l of type *Local and returns the State interface
-func NewStateLocal(l *Local) State {
-	return l
-}
-
 // Read retrieves and refreshes the remote state and returns terraform.State
 func (l *Local) Read(workspace ...string) (*terraform.State, error) {
 	if len(workspace) != 0 {
@@ -50,9 +45,4 @@ func (l *Local) Write(ts *terraform.State) error {
 		return err
 	}
 	return nil
-}
-
-// Persist saves the state to the backend
-func (l *Local) Persist() error {
-	return fmt.Errorf("[ERROR] persist is a no-op method for the local state, use Write() instead")
 }
